@@ -58,7 +58,7 @@
 										<s:text name="label.editar"/>
 									</a>
 
-									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao">
+									<a href="#" class="btn btn-danger btn-excluir" data-bs-toggle="modal" data-bs-target="#confirmarExclusao" data-rowid="${rowid}">
 										<s:text name="label.excluir"/>
 									</a>
 								</td>
@@ -114,5 +114,18 @@
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+		
+		<script>
+			var linksExcluir = document.querySelectorAll('.btn-excluir');
+			linksExcluir.forEach(function(link){
+				link.addEventListener('click', function(){
+					var rowid = this.getAttribute('data-rowid');
+					document.getElementById('excluir').setAttribute(
+							'href',
+							'excluirFuncionarios.action?funcionarioVo.rowid=' + rowid
+					);
+				});
+			});
+		</script>
 	</body>
 </html>

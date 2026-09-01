@@ -33,6 +33,25 @@ public class FuncionarioBusiness {
 		
 	}	
 	
+	public void excluirFuncionario(String rowid) {
+		try {
+			dao.deleteFuncionario(rowid);
+		}catch(Exception e) {
+			throw new BusinessException("Nao foi possivel realizar a exclusao do registro");
+		}
+	}
+	
+	public void atualizarFuncionario(FuncionarioVo funcionarioVo) {
+		try {
+			if(funcionarioVo.getNome().isEmpty())
+				throw new IllegalArgumentException("Nome nao pode ser em branco");
+			
+			dao.updateFuncionario(funcionarioVo);
+		}catch(Exception e) {
+			throw new BusinessException("Nao foi possivel realizar a atualizacao do registro");
+		}
+	}
+	
 	public List<FuncionarioVo> filtrarFuncionarios(FuncionarioFilter filter){
 		List<FuncionarioVo> funcionarios = new ArrayList<>();
 		
