@@ -36,7 +36,7 @@ public class FuncionarioAction extends Action {
 		if(funcionarioVo.getNome() == null)
 			return INPUT;
 		
-		if(funcionarioVo.getRowid() == null)
+		if(funcionarioVo.getRowid() == null || funcionarioVo.getRowid().isEmpty())
 			business.salvarFuncionario(funcionarioVo);
 		else
 			business.atualizarFuncionario(funcionarioVo);

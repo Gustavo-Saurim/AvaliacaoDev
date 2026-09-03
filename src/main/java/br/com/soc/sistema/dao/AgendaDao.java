@@ -20,7 +20,7 @@ public class AgendaDao extends Dao {
 			
 			int i=1;
 			ps.setString(i++, agendaVo.getNome());
-			ps.setString(i++,  agendaVo.getPeriodoDisponivel());
+			ps.setInt(i++, Integer.parseInt(agendaVo.getPeriodoDisponivel()));
 			ps.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class AgendaDao extends Dao {
 			
 			int i=1;
 			ps.setString(i++, agendaVo.getNome());
-			ps.setString(i++, agendaVo.getPeriodoDisponivel());
+			ps.setInt(i++, Integer.parseInt(agendaVo.getPeriodoDisponivel()));
 			ps.setString(i++, agendaVo.getRowid());
 			ps.executeUpdate();
 		}catch (SQLException e) {
