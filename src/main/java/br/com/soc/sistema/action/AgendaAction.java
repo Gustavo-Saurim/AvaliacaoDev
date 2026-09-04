@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.soc.sistema.business.AgendaBusiness;
+import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.infra.Action;
 import br.com.soc.sistema.infra.PeriodoDisponivel;
 import br.com.soc.sistema.vo.AgendaVo;
@@ -24,11 +25,15 @@ public class AgendaAction extends Action{
 	public String novo() {
 		if(agendaVo.getNome() == null)
 			return INPUT;
-		
-		if(agendaVo.getRowid() == null || agendaVo.getRowid().isEmpty())
-			business.salvarAgenda(agendaVo);
-		else
-			business.atualizarAgenda(agendaVo);
+		try {
+			if(agendaVo.getRowid() == null || agendaVo.getRowid().isEmpty())
+				business.salvarAgenda(agendaVo);
+			else
+				business.atualizarAgenda(agendaVo);
+		} catch (BusinessException e) {
+			addActionError(e.getMessage());
+			return INPUT;
+		}
 		
 		return REDIRECT;
 	}

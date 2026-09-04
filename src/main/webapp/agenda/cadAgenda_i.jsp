@@ -11,6 +11,7 @@
 
 		<div class="container">
 			<s:form action="/novoAgendas.action">
+				<s:actionerror cssClass="alert-danger mt-3"/>
 
 				<div class="card mt-5">
 					<div class="card-header">

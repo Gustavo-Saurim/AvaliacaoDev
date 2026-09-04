@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.soc.sistema.business.FuncionarioBusiness;
+import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.filter.FuncionarioFilter;
 import br.com.soc.sistema.infra.Action;
 import br.com.soc.sistema.infra.OpcoesComboBuscar;
@@ -35,11 +36,15 @@ public class FuncionarioAction extends Action {
 	public String novo() {
 		if(funcionarioVo.getNome() == null)
 			return INPUT;
-		
-		if(funcionarioVo.getRowid() == null || funcionarioVo.getRowid().isEmpty())
-			business.salvarFuncionario(funcionarioVo);
-		else
-			business.atualizarFuncionario(funcionarioVo);
+		try {
+			if(funcionarioVo.getRowid() == null || funcionarioVo.getRowid().isEmpty())
+				business.salvarFuncionario(funcionarioVo);
+			else
+				business.atualizarFuncionario(funcionarioVo);
+		} catch (BusinessException e) {
+			addActionError(e.getMessage());
+			return INPUT;
+		}
 		
 		return REDIRECT;
 	}

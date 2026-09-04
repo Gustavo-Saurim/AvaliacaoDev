@@ -22,7 +22,6 @@ public class AgendaBusiness {
 		try {
 			if(agendaVo.getNome().isEmpty())
 				throw new IllegalArgumentException("Nome nao pode ser em branco");
-			
 			dao.insertAgenda(agendaVo);
 		} catch (Exception e) {
 			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
