@@ -3,3 +3,5 @@ INSERT INTO funcionario (nm_funcionario) VALUES ('João'), ('Maria'), ('José'),
 
 CREATE TABLE agenda (rowid bigint auto_increment, nm_agenda VARCHAR(255), cd_periodo_disponivel INT);
 INSERT INTO agenda (nm_agenda, cd_periodo_disponivel) VALUES ('Agenda Manhã', 1), ('Agenda Tarde', 2), ('Agenda Integral', 3);
+
+CREATE TABLE compromisso (rowid bigint auto_increment, cd_funcionario bigint, cd_agenda bigint, dt_compromisso DATE, hr_compromisso TIME);
