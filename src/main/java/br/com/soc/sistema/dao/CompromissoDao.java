@@ -79,7 +79,8 @@ public class CompromissoDao extends Dao{
 				vo.setCodigoFuncionario(rs.getString("funcionario"));
 				vo.setCodigoAgenda(rs.getString("agenda"));
 				vo.setData(rs.getString("data"));
-				vo.setHorario(rs.getString("horario"));
+				String horario = rs.getString("horario");
+				vo.setHorario(horario != null && horario.length() >= 5 ? horario.substring(0, 5) : horario);
 				
 				compromissos.add(vo);
 			}
@@ -111,7 +112,8 @@ public class CompromissoDao extends Dao{
 					vo.setCodigoFuncionario(rs.getString("funcionario"));
 					vo.setCodigoAgenda(rs.getString("agenda"));
 					vo.setData(rs.getString("data"));
-					vo.setHorario(rs.getString("horario"));
+					String horario = rs.getString("horario");
+					vo.setHorario(horario != null && horario.length() >= 5 ? horario.substring(0, 5) : horario);
 				}
 				return vo;
 			}

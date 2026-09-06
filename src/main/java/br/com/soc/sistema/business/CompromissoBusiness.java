@@ -39,6 +39,7 @@ public class CompromissoBusiness {
 		try {
 			dao.updateCompromisso(compromissoVo);
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw new BusinessException("Nao foi possivel realizar a atualizacao do registro");
 		}
 	}

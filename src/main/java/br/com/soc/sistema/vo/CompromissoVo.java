@@ -6,7 +6,25 @@ public class CompromissoVo {
 	private String codigoAgenda;
 	private String data;
 	private String horario;
+	private String nomeFuncionario;
+	private String nomeAgenda;
 	
+	public String getNomeFuncionario() {
+		return nomeFuncionario;
+	}
+
+	public void setNomeFuncionario(String nomeFuncionario) {
+		this.nomeFuncionario = nomeFuncionario;
+	}
+
+	public String getNomeAgenda() {
+		return nomeAgenda;
+	}
+
+	public void setNomeAgenda(String nomeAgenda) {
+		this.nomeAgenda = nomeAgenda;
+	}
+
 	public CompromissoVo() {}
 	
 	public String getRowid() {
