@@ -3,12 +3,14 @@ package br.com.soc.sistema.business;
 import java.util.List;
 
 import br.com.soc.sistema.dao.AgendaDao;
+import br.com.soc.sistema.dao.CompromissoDao;
 import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.vo.AgendaVo;
 
 public class AgendaBusiness {
 	private static final String FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO = "Foi informado um caracter no lugar de um numero";
 	private AgendaDao dao;
+	private CompromissoDao compromissoDao = new CompromissoDao();
 	
 	public AgendaBusiness() {
 		this.dao = new AgendaDao();
@@ -29,6 +31,9 @@ public class AgendaBusiness {
 	}
 	
 	public void excluirAgenda(String rowid) {
+		if(compromissoDao.CountByAgenda(rowid) > 0)
+			throw new BusinessException("Nao foi possivel excluir uma agenda com compromisso cadastrados");
+		
 		try {
 			dao.deleteAgenda(rowid);
 		}catch(Exception e) {

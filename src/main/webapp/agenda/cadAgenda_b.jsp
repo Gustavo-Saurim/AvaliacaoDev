@@ -9,6 +9,7 @@
 	</head>
 	<body class="bg-secondary">
 		<div class="container">
+			<s:actionerror cssClass="alert alert-danger mt-3"/>
 
 			<div class="row mt-5">
 				<table class="table table-light table-striped align-middle">

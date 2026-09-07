@@ -3,6 +3,7 @@ package br.com.soc.sistema.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.soc.sistema.dao.CompromissoDao;
 import br.com.soc.sistema.dao.FuncionarioDao;
 import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.filter.FuncionarioFilter;
@@ -12,6 +13,7 @@ public class FuncionarioBusiness {
 
 	private static final String FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO = "Foi informado um caracter no lugar de um numero";
 	private FuncionarioDao dao;
+	private CompromissoDao compromissoDao = new CompromissoDao();
 	
 	public FuncionarioBusiness() {
 		this.dao = new FuncionarioDao();
@@ -35,6 +37,7 @@ public class FuncionarioBusiness {
 	
 	public void excluirFuncionario(String rowid) {
 		try {
+			compromissoDao.deleteByFuncionario(rowid);
 			dao.deleteFuncionario(rowid);
 		}catch(Exception e) {
 			throw new BusinessException("Nao foi possivel realizar a exclusao do registro");

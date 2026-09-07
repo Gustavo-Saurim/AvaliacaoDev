@@ -63,6 +63,37 @@ public class CompromissoDao extends Dao{
 		}
 	}
 	
+	public void deleteByFuncionario(String codigoFuncionario) {
+		StringBuilder query = new StringBuilder("DELETE FROM compromisso WHERE cd_funcionario = ?");
+		try(
+			Connection con = getConexao();
+			PreparedStatement ps = con.prepareStatement(query.toString())){
+			
+			ps.setLong(1,  Long.parseLong(codigoFuncionario));
+			ps.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public int CountByAgenda(String codigoAgenda) {
+		StringBuilder query = new StringBuilder("SELECT COUNT(*) total FROM compromisso WHERE cd_agenda = ?");
+		try(
+			Connection con = getConexao();
+			PreparedStatement ps = con.prepareStatement(query.toString())){
+			
+			ps.setLong(1, Long.parseLong(codigoAgenda));
+			
+			try(ResultSet rs = ps.executeQuery()){
+				if(rs.next())
+					return rs.getInt("total");
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public List<CompromissoVo> findAllCompromissos(){
 		StringBuilder query = new StringBuilder(
 				"SELECT rowid id, cd_funcionario funcionario, cd_agenda agenda, dt_compromisso data, hr_compromisso horario FROM compromisso");

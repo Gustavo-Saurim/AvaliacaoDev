@@ -51,7 +51,13 @@ public class AgendaAction extends Action{
 		if(agendaVo.getRowid() == null)
 			return REDIRECT;
 		
-		business.excluirAgenda(agendaVo.getRowid());
+		try {
+			business.excluirAgenda(agendaVo.getRowid());
+		} catch (BusinessException e) {
+			addActionError(e.getMessage());
+			todos();
+			return SUCCESS;
+		}
 		
 		return REDIRECT;
 	}
