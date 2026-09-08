@@ -59,10 +59,10 @@ public class CompromissoAction extends Action{
 	}
 	
 	public String novo() {
-		if(compromissoVo.getCodigoFuncionario() == null 
-				|| compromissoVo.getCodigoAgenda() == null 
-				|| compromissoVo.getData() == null 
-				|| compromissoVo.getHorario() == null)
+		if(isBlank(compromissoVo.getCodigoFuncionario())
+				|| isBlank(compromissoVo.getCodigoAgenda())
+				|| isBlank(compromissoVo.getData())
+				|| isBlank(compromissoVo.getHorario()))
 			return INPUT;
 		
 		try {
@@ -76,6 +76,10 @@ public class CompromissoAction extends Action{
 		}
 		
 		return REDIRECT;
+	}
+	
+	private boolean isBlank(String valor) {
+		return valor == null || valor.trim().isEmpty();
 	}
 	
 	public String editar() {
