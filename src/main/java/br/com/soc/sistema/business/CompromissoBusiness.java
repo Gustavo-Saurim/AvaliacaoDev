@@ -19,6 +19,14 @@ public class CompromissoBusiness {
 		this.dao = new CompromissoDao();
 	}
 	
+	public List<CompromissoVo> trazerCompromissosPorPeriodo(String dataInicial, String dataFinal) {
+		try {
+			return dao.findByPeriodo(dataInicial, dataFinal);
+		}catch(Exception e) {
+			throw new BusinessException("Nao foi possivel gerar o relatorio");
+		}
+	}
+	
 	public List<CompromissoVo> trazerTodosOsCompromissos(){
 		return dao.findAllCompromissos();
 	}

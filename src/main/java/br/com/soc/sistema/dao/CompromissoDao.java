@@ -94,6 +94,41 @@ public class CompromissoDao extends Dao{
 		return 0;
 	}
 	
+	public List<CompromissoVo> findByPeriodo(String dataInicial, String dataFinal){
+		StringBuilder query = new StringBuilder(
+				"SELECT rowid id, cd_funcionario funcionario, cd_agenda agenda, dt_compromisso data, hr_compromisso horario ")
+				.append("From compromisso WHERE dt_compromisso BETWEEN ? AND ? ORDER BY dt_compromisso, hr_compromisso");
+		
+		try(
+			Connection con = getConexao();
+			PreparedStatement ps = con.prepareStatement(query.toString())){
+			
+			ps.setDate(1, Date.valueOf(dataInicial));
+			ps.setDate(2, Date.valueOf(dataFinal));
+			
+			try(ResultSet rs = ps.executeQuery()){
+				CompromissoVo vo = null;
+				List<CompromissoVo> compromissos = new ArrayList<>();
+				while (rs.next()) {
+					vo = new CompromissoVo();
+					vo.setRowid(rs.getString("id"));
+					vo.setCodigoFuncionario(rs.getString("funcionario"));
+					vo.setCodigoAgenda(rs.getString("agenda"));
+					vo.setData(rs.getString("data"));
+					
+					String horario = rs.getString("horario");
+					vo.setHorario(horario != null && horario.length() >= 5 ? horario.substring(0, 5) : horario);
+					
+					compromissos.add(vo);
+				}
+				return compromissos;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+	}
+	
 	public List<CompromissoVo> findAllCompromissos(){
 		StringBuilder query = new StringBuilder(
 				"SELECT rowid id, cd_funcionario funcionario, cd_agenda agenda, dt_compromisso data, hr_compromisso horario FROM compromisso");
