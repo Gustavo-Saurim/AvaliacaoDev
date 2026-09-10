@@ -1,7 +1,16 @@
 package br.com.soc.sistema.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import br.com.soc.sistema.business.AgendaBusiness;
 import br.com.soc.sistema.business.CompromissoBusiness;
@@ -19,6 +28,7 @@ public class RelatorioAction extends Action{
 	private List<CompromissoVo> compromissos = new ArrayList<>();
 	private List<FuncionarioVo> funcionarios = new ArrayList<>();
 	private List<AgendaVo> agendas = new ArrayList<>();
+	private InputStream excelStream;
 	
 	private CompromissoBusiness business = new CompromissoBusiness();
 	private FuncionarioBusiness funcionarioBusiness = new FuncionarioBusiness();
@@ -27,6 +37,58 @@ public class RelatorioAction extends Action{
 	public RelatorioAction() {
 		funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
 		agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
+	}
+	
+	public String exportarExcel() throws IOException {
+		if(dataInicial == null || dataInicial.isEmpty()
+				|| dataFinal == null || dataFinal.isEmpty()) {
+			addActionError("Informe a data inicial e a data final");
+			return INPUT;
+		}
+		
+		compromissos.addAll(business.trazerCompromissosPorPeriodo(dataInicial, dataFinal));
+		
+		for (CompromissoVo compromisso : compromissos) {
+			buscarNomeFuncionario(compromisso);
+			buscarNomeAgenda(compromisso);
+		}
+		
+		try(Workbook workbook = new XSSFWorkbook()){
+			Sheet sheet = workbook.createSheet("Compromissos");
+			
+			Row cabecalho = sheet.createRow(0);
+			cabecalho.createCell(0).setCellValue("Código funcionário");
+			cabecalho.createCell(1).setCellValue("Nome Funcionário");
+			cabecalho.createCell(2).setCellValue("Código Agenda");
+			cabecalho.createCell(3).setCellValue("Nome Agenda");
+			cabecalho.createCell(4).setCellValue("Data");
+			cabecalho.createCell(5).setCellValue("Hora");
+			
+			int numeroLinha = 1;
+			for (CompromissoVo compromisso :compromissos) {
+				Row linha = sheet.createRow(numeroLinha++);
+				linha.createCell(0).setCellValue(compromisso.getCodigoFuncionario());
+				linha.createCell(1).setCellValue(compromisso.getNomeFuncionario());
+				linha.createCell(2).setCellValue(compromisso.getCodigoAgenda());
+				linha.createCell(3).setCellValue(compromisso.getNomeAgenda());
+				linha.createCell(4).setCellValue(compromisso.getData());
+				linha.createCell(5).setCellValue(compromisso.getHorario());
+			}
+			
+			for (int i = 0; i <= 5; i++) {
+				sheet.autoSizeColumn(i);
+			}
+			
+			ByteArrayOutputStream saida = new ByteArrayOutputStream();
+			workbook.write(saida);
+			excelStream = new ByteArrayInputStream(saida.toByteArray());
+		}
+		
+		return "excel";
+	}
+	
+	public InputStream getExcelStream() {
+		return excelStream;
 	}
 	
 	public String filtrar() {

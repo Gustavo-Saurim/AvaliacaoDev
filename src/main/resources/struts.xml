@@ -31,6 +31,12 @@
 		<action name="*Relatorios" class="br.com.soc.sistema.action.RelatorioAction" method="{1}">
     		<result name="success">/relatorio/relatorio.jsp</result>
     		<result name="input">/relatorio/relatorio.jsp</result>
+    		<result name="excel" type="stream">
+        		<param name="contentType">application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</param>
+        		<param name="inputName">excelStream</param>
+        		<param name="contentDisposition">attachment;filename="relatorio_compromissos.xlsx"</param>
+        		<param name="bufferSize">1024</param>
+    		</result>
 		</action>
     </package>
 

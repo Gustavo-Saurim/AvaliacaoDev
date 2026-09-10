@@ -17,21 +17,26 @@
 				</div>
 				<div class="card-body">
 					<s:form action="/filtrarRelatorios.action" method="get">
-						<div class="row align-items-end">
-							<div class="col-sm-3">
-								<label for="dataInicial">Data Inicial:</label>
-								<input type="date" class="form-control" id="dataInicial"
-									name="dataInicial" value="<s:property value="dataInicial"/>"/>
-							</div>
-							<div class="col-sm-3">
-								<label for="dataFinal">Data Final:</label>
-								<input type="date" class="form-control" id="dataFinal"
-									name="dataFinal" value="<s:property value="dataFinal"/>"/>
-							</div>
-							<div class="col-sm-2">
-								<button class="btn btn-primary">Pesquisar</button>
-							</div>
-						</div>
+    					<div class="row align-items-end">
+					        <div class="col-sm-3">
+					            <label for="dataInicial">Data Inicial:</label>
+					            <input type="date" class="form-control" id="dataInicial"
+					                name="dataInicial" value="<s:property value="dataInicial"/>"/>
+					        </div>
+					        <div class="col-sm-3">
+					            <label for="dataFinal">Data Final:</label>
+					            <input type="date" class="form-control" id="dataFinal"
+					                name="dataFinal" value="<s:property value="dataFinal"/>"/>
+					        </div>
+					        <div class="col-sm-2">
+					            <button class="btn btn-primary">Pesquisar</button>
+					        </div>
+					        <div class="col-sm-2">
+					            <button type="submit" formaction="exportarExcelRelatorios.action" class="btn btn-success">
+					                Exportar Excel
+					            </button>
+					        </div>
+					    </div>
 					</s:form>
 				</div>
 			</div>
